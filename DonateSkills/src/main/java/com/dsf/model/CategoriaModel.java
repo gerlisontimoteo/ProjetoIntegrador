@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "categoria")
@@ -18,6 +19,7 @@ public class CategoriaModel {
 	
 	@Column
 	@NotNull
+	@Size(max = 70)
 	private String tipo_curso;
 
 	public long getId_categoria() {
