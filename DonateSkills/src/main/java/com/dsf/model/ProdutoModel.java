@@ -1,43 +1,49 @@
 package com.dsf.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name = "produto")
+@Table(name = "tb_produto")
 public class ProdutoModel {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_produto;
-	
-	@Column
+
 	@NotNull
 	@Size(max = 70)
 	private String nome_curso;
-	
-	@Column
+
 	@NotNull
 	private String descricao;
-	
-	@Column
+
 	@NotNull
 	private int custo_monitoria;
-	
-	@Column
+
 	@NotNull
 	private int ganho_aula;
-	
-	@Column
+
 	@NotNull
 	private int ganho_prova;
 
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private CategoriaModel categoria;
+
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private UsuarioModel criador;
+	
 	public long getId_produto() {
 		return id_produto;
 	}
@@ -84,5 +90,21 @@ public class ProdutoModel {
 
 	public void setGanho_prova(int ganho_prova) {
 		this.ganho_prova = ganho_prova;
+	}
+
+	public CategoriaModel getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(CategoriaModel categoria) {
+		this.categoria = categoria;
+	}
+
+	public UsuarioModel getCriador() {
+		return criador;
+	}
+
+	public void setCriador(UsuarioModel criador) {
+		this.criador = criador;
 	}
 }
