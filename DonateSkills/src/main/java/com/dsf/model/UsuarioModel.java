@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -41,6 +43,15 @@ public class UsuarioModel {
 	@OneToMany(mappedBy = ("criador"), cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("criador")
 	private List<ProdutoModel> curso_criado;
+	
+	@ManyToMany(mappedBy = "monitor", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("monitor")
+	private List<ProdutoModel> curso_monitorado; 
+	
+	@ManyToMany(mappedBy = "estudante", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("estudante")
+	private List<ProdutoModel> curso_estudado; 
+
 
 	public long getId_usuario() {
 		return id_usuario;

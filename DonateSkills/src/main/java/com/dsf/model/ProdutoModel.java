@@ -1,9 +1,14 @@
 package com.dsf.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,7 +18,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_produto")
+@Table(name = "produto")
 public class ProdutoModel {
 
 	@Id
@@ -41,8 +46,20 @@ public class ProdutoModel {
 	private CategoriaModel categoria;
 
 	@ManyToOne
-	@JsonIgnoreProperties("produto")
+	@JsonIgnoreProperties("criador_curso")
 	private UsuarioModel criador;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("curso_monitorado")
+	@JoinTable(name="usuario_monitor", joinColumns = @JoinColumn(name="id_produto_estudado"),
+	inverseJoinColumns = @JoinColumn(name="id_usuario_monitor"))
+	private List<UsuarioModel> monitor;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("curso_monitorado")
+	@JoinTable(name="usuario_estudante", joinColumns = @JoinColumn(name="id_produto_monitorado"),
+	inverseJoinColumns = @JoinColumn(name="id_usuario_estudante"))
+	private List<UsuarioModel> estudante;
 	
 	public long getId_produto() {
 		return id_produto;
