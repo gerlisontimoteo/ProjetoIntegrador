@@ -25,6 +25,9 @@ public class Produto {
 
 	@NotNull
 	private String descricao;
+	
+	@NotNull
+	private String nivel;
 
 	@NotNull
 	@ManyToOne
